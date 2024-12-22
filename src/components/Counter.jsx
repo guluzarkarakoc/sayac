@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 
 const Counter = ({ initialValue = 0 }) => {
-  const [count, setCount] = useState(initialValue);
+  const [count, setCount] = useState(()=> {
+    const savedCount = localStorage.getItem("counterValue");
+    return savedCount ? Number(savedCount) : initialValue;
+  });
+
   const [step, setStep] = useState(1);
 
   useEffect(() => {
     localStorage.setItem("counterValue", count);
   }, [count]);
 
-  useEffect(() => {
-    const savedCount = localStorage.getItem("counterValue");
-    if (savedCount) {
-      setCount(Number(savedCount));
-    }
-  }, []);
   return (
     <div >
       <h1>Sayaç Uygulaması</h1>
